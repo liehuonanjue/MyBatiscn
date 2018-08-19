@@ -1,9 +1,11 @@
 package dao;
 
 import entity.Users;
+import org.apache.ibatis.annotations.Param;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 
 public interface IdepMapper {
@@ -20,6 +22,10 @@ public interface IdepMapper {
     Users findUserById(Serializable serializable);
 
     //查询所有
-    List<Users> findUserAll(Serializable serializable);
+    List<Users> findUserAll();
 
+    //多条件查询
+    Users findUserBy(@Param("id") int id,@Param("name") String name);
+
+    Users findUserMap(Map<String, Object> map);
 }

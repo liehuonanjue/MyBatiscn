@@ -25,6 +25,6 @@
 
     <mappers>
         <!--管理我们设置的映射文件-->
-        <mapper resource="dao/impl/DeptMapper.xml"></mapper>
+        <mapper resource="dao/DeptMapper.xml"></mapper>
     </mappers>
 </configuration>

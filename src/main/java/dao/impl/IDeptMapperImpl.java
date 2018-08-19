@@ -9,7 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 import util.SessionFactoryUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class IDeptMapperImpl {
@@ -75,17 +77,48 @@ public class IDeptMapperImpl {
 
     @Test
     public void seleByid() {
-        System.out.println("单侧执行1");
-        Users nu = mapper.findUserById(36);
-        System.out.println(nu);
+        System.out.println("查询单个");
+        Users nu = mapper.findUserById(35);
+        System.out.println(nu.getUserName());
     }
 
     @Test
     public void seleAll() {
-        System.out.println("单侧执行1");
-        List<Users> nu = mapper.findUserAll(36);
-        System.out.println(nu);
+        System.out.println(" 查询全部");
+        List<Users> nu = mapper.findUserAll();
+        for (Users users : nu) {
+            System.out.println(users.getUserName());
+        }
+
     }
+
+    @Test
+    public void seleAsp() {
+        System.out.println("查询单个");
+        Users nu = mapper.findUserBy(35, "凄涼");
+        System.out.println(nu.getUserName());
+    }
+
+    /*    @Test
+        public void seleMap() {
+            System.out.println("查询单个");
+            Map<String, Object> map = new HashMap<>();
+            map.put("name", "凄涼");
+            Users nu = mapper.findUserMap(map);
+            System.out.println(nu.getUserName());
+        }*/
+    @Test
+    public void seleMap() {
+        System.out.println("查询单个");
+        Map<String, Object> map = new HashMap<>();
+        Users nu = new Users();
+        nu.setUserName("凄涼");
+        map.put("name", nu);
+        Users nuu = mapper.findUserMap(map);
+        System.out.println(nuu.getUserName());
+    }
+
+
 /*    @Override
     public int addUser(Users users) {
         int num = 0;

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTDConfig 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.IdepMapper">
+    <insert id="addUser" parameterType="Users">
+INSERT INTO users(userName) VALUE(#{userName})
+    </insert>
+    <delete id="deleteUser">
+DELETE FROM users WHERE id=#{xxx}
+    </delete>
+    <update id="updateUser" parameterType="Users">
+UPDATE users	 SET userName=#{userName} WHERE	 id =#{user_id}
+    </update>
+    <select id="findUserById" resultMap="usersMap">
+        <include refid="UserSelect"/>
+        where id=#{xxx}
+    </select>
+    <select id="findUserAll" resultMap="usersMap">
+        <include refid="UserSelect"/>
+    </select>
+
+    <select id="findUserBy" resultMap="usersMap">
+        <include refid="UserSelect"></include>
+        where id=#{id} AND userName=#{name}
+    </select>
+
+    <select id="findUserMap" resultMap="usersMap">
+        <include refid="UserSelect"></include>
+
+        where userName=#{name.userName}
+    </select>
+
+
+    <resultMap id="usersMap" type="Users">
+        <id property="user_id" column="id"></id>
+        <result property="userName" column="userName"></result>
+    </resultMap>
+
+    <!--声明一个sql 防止数据冗余-->
+    <sql id="UserSelect">
+          SELECT  id,userName  FROM users
+    </sql>
+
+</mapper>
