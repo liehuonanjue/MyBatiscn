@@ -5,6 +5,16 @@ import java.io.Serializable;
 public class Users implements Serializable {
     private Integer user_id; //用户ID
     private String userName;//用户名
+    private String usernpwd;//用户名
+
+    public String getUsernpwd() {
+        return usernpwd;
+    }
+
+    public void setUsernpwd(String usernpwd) {
+        this.usernpwd = usernpwd;
+    }
+
 
     public Integer getUser_id() {
         return user_id;

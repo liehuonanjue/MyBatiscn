@@ -4,13 +4,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.IdepMapper">
     <insert id="addUser" parameterType="Users">
-INSERT INTO users(userName) VALUE(#{userName})
+        <selectKey resultType="int" keyProperty="user_id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO users(userName) VALUE(#{userName})
     </insert>
     <delete id="deleteUser">
 DELETE FROM users WHERE id=#{xxx}
     </delete>
     <update id="updateUser" parameterType="Users">
-UPDATE users	 SET userName=#{userName} WHERE	 id =#{user_id}
+        UPDATE users
+        <trim prefix="set" suffixOverrides=",">
+            <if test="userName!='' and userName!= null">
+                userName=#{userName},
+            </if>
+            <if test="usernpwd!='' and usernpwd!= null">
+                PASSWORD=#{usernpwd},
+            </if>
+        </trim>
+        <where>id =#{user_id}</where>
     </update>
     <select id="findUserById" resultMap="usersMap">
         <include refid="UserSelect"/>
@@ -24,22 +36,45 @@ UPDATE users	 SET userName=#{userName} WHERE	 id =#{user_id}
         <include refid="UserSelect"></include>
         where id=#{id} AND userName=#{name}
     </select>
+    <!--
+         <trim prefix="where" prefixOverrides="and| or"> 可以代替     <where>-->
+    <!--
+        <select id="findUserMap" resultMap="usersMap">
+            <include refid="UserSelect"></include>
+            <trim prefix="where" prefixOverrides="AND">
+                <if test="'#{name.userName}'!='' and '#{name.userName}'!= null">
+                    AND userName LIKE concat('%',#{name.userName},'%')
+                </if>
+            </trim>
+        </select>
+    -->
 
     <select id="findUserMap" resultMap="usersMap">
         <include refid="UserSelect"></include>
+        <trim prefix="where" prefixOverrides="AND">
+            <choose>
+                <when test="'#{name.userName}'!='' and '#{name.userName}'!= null">
+                    AND userName LIKE concat('%',#{name.userName},'%')
+                </when>
+                <when test="'#{name.usernpwd}'!='' and '#{name.usernpwd}'!= null">
+                    AND PASSWORD LIKE concat('%',#{name.usernpwd},'%')
+                </when>
+                <otherwise>
+                    AND ID=#{name.user_id}
+                </otherwise>
+            </choose>
 
-        where userName=#{name.userName}
+        </trim>
     </select>
-
-
     <resultMap id="usersMap" type="Users">
         <id property="user_id" column="id"></id>
         <result property="userName" column="userName"></result>
+        <result property="usernpwd" column="PASSWORD"></result>
     </resultMap>
 
     <!--声明一个sql 防止数据冗余-->
     <sql id="UserSelect">
-          SELECT  id,userName  FROM users
+          SELECT  id,userName,PASSWORD  FROM users
     </sql>
 
 </mapper>

@@ -66,8 +66,9 @@ public class IDeptMapperImpl {
     public void update() {
         System.out.println("单侧执行1");
         Users users = new Users();
-        users.setUserName("凄涼");
-        users.setUser_id(35);
+//        users.setUserName("凄涼");
+        users.setUsernpwd("sddd");
+        users.setUser_id(36);
         int nu = mapper.updateUser(users);
         System.out.println("单侧执行2");
         if (nu > 0) {
@@ -113,6 +114,8 @@ public class IDeptMapperImpl {
         Map<String, Object> map = new HashMap<>();
         Users nu = new Users();
         nu.setUserName("凄涼");
+        nu.setUser_id(37);
+//        nu.setUsernpwd("sddd");
         map.put("name", nu);
         Users nuu = mapper.findUserMap(map);
         System.out.println(nuu.getUserName());
