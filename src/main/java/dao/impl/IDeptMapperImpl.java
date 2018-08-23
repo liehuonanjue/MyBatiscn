@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import util.SessionFactoryUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,6 +122,72 @@ public class IDeptMapperImpl {
         System.out.println(nuu.getUserName());
     }
 
+    @Test
+    public void selearray() {
+        System.out.println("foreach数组");
+//        nu.setUsernpwd("sddd");
+        int[] myList = {35, 67};
+        List<Users> nuu = mapper.findArr(myList);
+        System.out.println(nuu);
+    }
+
+    @Test
+    public void findLis() {
+        System.out.println("foreach数组");
+//        nu.setUsernpwd("sddd");
+        List<Integer> myList = new ArrayList<>();
+        myList.add(35);
+        myList.add(37);
+        List<Users> nuu = mapper.findLis(myList);
+        System.out.println(nuu);
+    }
+
+    @Test
+    public void findlistuser() {
+        System.out.println("foreach数组");
+//        nu.setUsernpwd("sddd");
+        List<Users> myList = new ArrayList<>();
+        Users nu = new Users(35);
+        Users nu2 = new Users(67);
+        myList.add(nu);
+        myList.add(nu2);
+        List<Users> nuu = mapper.findlistuser(myList);
+        for (Users users : nuu) {
+            System.out.println(users.getUser_id());
+        }
+    }
+
+    @Test
+    public void addarray() {
+        System.out.println("foreach数组");
+//        nu.setUsernpwd("sddd");
+        String[] myList = {"ddd", "wedcsad"};
+        int nuu = mapper.addarr(myList);
+        System.out.println(nuu);
+    }
+
+    @Test
+    public void findMap() {
+        System.out.println("foreach数组");
+        Map<String, Object> map = new HashMap<>();
+
+        /*
+        根据key查询
+        map.put("35", 1);
+        map.put("67", 1);
+        */
+//            根据key查询
+        map.put("key1", 35);
+        map.put("key2", 67);
+
+//        根据属性名查询
+/*        Users nu = new Users(35);
+        Users nu2 = new Users(37);
+        map.put("key1", nu);
+        map.put("key2", nu2);*/
+        List<Users> nuu = mapper.findMap(map);
+        System.out.println(nuu);
+    }
 
 /*    @Override
     public int addUser(Users users) {

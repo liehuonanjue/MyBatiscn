@@ -66,12 +66,96 @@ DELETE FROM users WHERE id=#{xxx}
 
         </trim>
     </select>
+
+
+    <select id="findArr" resultMap="usersMap">
+        <include refid="UserSelect"></include>
+        <where>
+            <if test="array.length>0">
+                id in
+                <foreach collection="array" open="(" close=")" separator="," item="mid">
+                    #{mid}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="findLis" resultMap="usersMap">
+        <include refid="UserSelect"></include>
+        <where>
+            <if test="list.size>0">
+                id in
+                <foreach collection="list" open="(" close=")" separator="," item="mid">
+                    #{mid}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="findlistuser" resultMap="usersMap">
+        <include refid="UserSelect"></include>
+        <where>
+            <if test="list.size>0">
+                id in
+                <foreach collection="list" open="(" close=")" separator="," item="user">
+                    #{user.user_id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <!--
+      根据key查询
+     <select id="findMap" resultMap="usersMap">
+            <include refid="UserSelect"></include>
+            <where>
+                <if test="MapUsers.keys.size>0">
+                    id in
+                    <foreach collection="MapUsers.keys" open="(" close=")" separator="," item="user">
+                        #{user}
+                    </foreach>
+                </if>
+            </where>
+        </select>-->
+
+    <!--根据value查询-->
+     <select id="findMap" resultMap="usersMap">
+            <include refid="UserSelect"></include>
+            <where>
+                <if test="MapUsers.keys.size>0">
+                    id in
+                    <foreach collection="MapUsers.keys" open="(" close=")" separator="," item="user">
+                        #{MapUsers[${user}]}
+                    </foreach>
+                </if>
+            </where>
+        </select>
+    <!--根据属性名查询-->
+<!--    <select id="findMap" resultMap="usersMap">
+        <include refid="UserSelect"></include>
+        <where>
+            <if test="MapUsers.keys.size>0">
+                id in
+                <foreach collection="MapUsers.keys" open="(" close=")" separator="," item="user">
+                    #{MapUsers[${user}].user_id}
+                </foreach>
+            </if>
+        </where>
+    </select>-->
+
+    <insert id="addarr">
+        INSERT INTO users(userName)
+        <trim prefix="VALUES" suffixOverrides=",">
+            <if test="array.length>0">
+                <foreach collection="array" separator="," item="mid">
+                    ( #{mid})
+                </foreach>
+            </if>
+        </trim>
+    </insert>
+
     <resultMap id="usersMap" type="Users">
         <id property="user_id" column="id"></id>
         <result property="userName" column="userName"></result>
         <result property="usernpwd" column="PASSWORD"></result>
     </resultMap>
-
     <!--声明一个sql 防止数据冗余-->
     <sql id="UserSelect">
           SELECT  id,userName,PASSWORD  FROM users

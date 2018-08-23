@@ -25,7 +25,23 @@ public interface IdepMapper {
     List<Users> findUserAll();
 
     //多条件查询
-    Users findUserBy(@Param("id") int id,@Param("name") String name);
+    Users findUserBy(@Param("id") int id, @Param("name") String name);
 
     Users findUserMap(Map<String, Object> map);
+
+    //查询所有
+    List<Users> findArr(int[] ints);
+
+    //查询所有
+    List<Users> findLis(List<Integer> ints);
+
+    //查询所有
+    List<Users> findlistuser(List<Users> ints);
+
+    //
+    int addarr(String[] ints);
+
+    //查询所有
+    List<Users> findMap(@Param("MapUsers") Map<String, Object> map);
+
 }

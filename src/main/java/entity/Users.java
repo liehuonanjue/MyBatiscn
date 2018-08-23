@@ -4,6 +4,15 @@ import java.io.Serializable;
 
 public class Users implements Serializable {
     private Integer user_id; //用户ID
+
+    public Users() {
+    }
+
+    public Users(Integer user_id) {
+
+        this.user_id = user_id;
+    }
+
     private String userName;//用户名
     private String usernpwd;//用户名
 
